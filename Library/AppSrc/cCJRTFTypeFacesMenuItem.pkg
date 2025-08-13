@@ -1,0 +1,127 @@
+﻿Use cCJCommandBarSystem.pkg
+Use tTypeface.pkg
+Use cTypeFaces.Pkg
+
+Class cCJRTFTypeFacesMenuItem is a cCJMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set peControlType to xtpControlComboBox
+        Set pbEnabled to False
+        Set psCaption to "Typeface:"
+        Set peControlStyle to xtpButtonCaption
+        Set pbActiveUpdate to True
+
+        Object oSystemTypeFaces is a cTypeFaces
+        End_Object
+
+        Property Boolean pbChangeTypeFace
+    End_Procedure
+
+    Procedure OnCreateControl Handle hoCombo
+        Send FillComboList hoCombo
+    End_Procedure
+
+    Procedure FillComboList Handle hoCombo
+        tTypeFace[] TypeFaces
+        String sCaption
+        Integer iThumbWidth iElements iElement iIndex
+        Integer iTextSize iMaxTextWidth iLabelWidth
+
+        Send ComClear of hoCombo
+
+        Move (GetSystemMetrics (SM_CXVSCROLL)) to iThumbWidth
+
+        Send EnumTypeFaces of oSystemTypeFaces
+        Get pTypeFaces of oSystemTypeFaces to TypeFaces
+
+        Move (SizeOfArray (TypeFaces)) to iElements
+        Decrement iElements
+        For iElement from 0 to iElements
+            Move (iElement + 1) to iIndex
+            Send ComAddItem of hoCombo TypeFaces[iElement].sFaceName iIndex
+            Set ComItemData of hoCombo iIndex to iElement
+
+            Get Text_Extent TypeFaces[iElement].sFaceName to iTextSize
+            Move ((Low (iTextSize) + 10 + iThumbWidth) max iMaxTextWidth) to iMaxTextWidth
+        Loop
+
+        Get psCaption to sCaption
+        Get Text_Extent sCaption to iTextSize
+        Move (Low (iTextSize)) to iLabelWidth
+        Move (iMaxTextWidth + iLabelWidth) to iMaxTextWidth
+
+        Set ComDropDownWidth of hoCombo to iMaxTextWidth
+        Set ComListIndex of hoCombo to 1
+        Set ComWidth of hoCombo to iMaxTextWidth
+    End_Procedure
+
+    Procedure OnExecute Variant vControl
+        Handle hoCombo hoFocus
+        Integer iIndex iElement
+        tTypeFace[] TypeFaces
+        Boolean bChangeTypeFace bIsRichEdit
+
+        Get pbChangeTypeFace to bChangeTypeFace
+        If (bChangeTypeFace) Begin
+            Get CreateProxyControl vControl to hoCombo
+            If (hoCombo > 0) Begin
+                Get ComListIndex of hoCombo to iIndex
+                If (iIndex > 0) Begin
+                    Get ComItemData of hoCombo iIndex to iElement
+                    If (iElement >= 0) Begin
+                        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+                        If (bIsRichEdit) Begin
+                            Get pTypeFaces of oSystemTypeFaces to TypeFaces
+                            Set psTypeFace of hoFocus to TypeFaces[iElement].sFaceName
+                        End
+                    End
+                End
+                Send Destroy of hoCombo
+            End
+        End
+    End_Procedure
+
+    Procedure UpdateComboForm String sTypeFace
+        Integer iIndex
+        Variant vControl
+        Handle hoCombo
+
+        Get FindFirstControl to vControl
+        If (not (IsNullComObject (vControl))) Begin
+            Get CreateProxyControl vControl to hoCombo
+
+            Set pbChangeTypeFace to False
+
+            Get ComFindItem of hoCombo sTypeFace to iIndex
+            Set ComListIndex of hoCombo to iIndex
+
+            Set pbChangeTypeFace to True
+
+            Send Destroy of hoCombo
+        End
+    End_Procedure
+
+    Procedure OnUpdate
+        Boolean bIsRichEdit
+        Handle hoFocus
+        String sTypeFace
+
+        Forward Send OnUpdate
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get psTypeFace of hoFocus to sTypeFace
+            Send UpdateComboForm sTypeFace
+        End
+    End_Procedure
+
+    Function IsEnabled Returns Boolean
+        Boolean bIsRichEdit
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+
+        Function_Return bIsRichEdit
+    End_Function
+End_Class

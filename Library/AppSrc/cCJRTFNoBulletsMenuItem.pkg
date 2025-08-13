@@ -1,0 +1,11 @@
+﻿Use cCJRTFBulletsMenuItem.pkg
+
+Class cCJRTFNoBulletsMenuItem is a cCJRTFBulletsMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "None"
+        Set psDescription to "Apply No Bullets Or Numbering"
+        Set peBullets to buNone
+    End_Procedure
+End_Class

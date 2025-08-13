@@ -1,0 +1,11 @@
+﻿Use cCJRTFBulletsMenuItem.pkg
+
+Class cCJRTFUppercaseLettersMenuItem is a cCJRTFBulletsMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Uppercase Letters"
+        Set psDescription to "Apply Numbering With Uppercase Letters"
+        Set peBullets to buUpperLetters
+    End_Procedure
+End_Class

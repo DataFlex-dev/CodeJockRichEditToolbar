@@ -1,0 +1,42 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+//****************************************************************************
+// An object of this class shows a picture to indicate that the user can
+// change the current selection in a RTF editor to underline
+//****************************************************************************
+Class cCJRTFUnderlineToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Underline"
+        Set psDescription to "Change Current Text Selection to Underline (Ctrl+U)"
+        Set psImage to "Underline.Ico"
+        Set psShortcut to "Ctrl+U"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to change the current text selection to bold
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bUnderline bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbUnderline of hoFocus to bUnderline
+            Set pbUnderline of hoFocus to (not (bUnderline))
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit bUnderline
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbUnderline of hoFocus to bUnderline
+        End
+
+        Function_Return bUnderline
+    End_Function
+End_Class

@@ -1,0 +1,39 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFUndoToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Undo Typing"
+        Set psDescription to "Undoes Typing Operation(s) (Ctrl+Z)"
+        Set psImage to "ActionUndo.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to undo the last typing
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bCanUndo bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbCanUndo of hoFocus to bCanUndo
+            If (bCanUndo) Begin
+                Send Undo of hoFocus
+            End
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit bUndo
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbCanUndo of hoFocus to bUndo
+        End
+
+        Function_Return bUndo
+    End_Function
+End_Class

@@ -1,0 +1,44 @@
+﻿Use cRichEdit.Pkg
+Use Colr_Dlg.Pkg
+Use Font_dlg.pkg
+
+Use cCJRTFToolbar.pkg
+Use cCJRTFMenuItem.Pkg
+Use cCJChangeColorMenuItem.Pkg
+Use cCJRTFBoldToolBarButton.Pkg
+Use cCJRTFItalicsToolBarButton.pkg
+Use cCJRTFUnderlineToolBarButton.pkg
+Use cCJRTFLeftAlignToolBarButton.pkg
+Use cCJRTFAlignRightToolBarButton.pkg
+Use cCJRTFAlignCenterToolBarButton.pkg
+Use cCJRTFNumberingMenuItem.pkg
+Use cCJRTFNoBulletsMenuItem.pkg
+Use cCJRTFArabicNumbersMenuItem.pkg
+Use cCJRTFLowercaseLettersMenuItem.pkg
+Use cCJRTFUppercaseLettersMenuItem.pkg
+Use cCJRTFRomanNumeralsMenuItem.pkg
+Use cCJRTFUpperRomanNumeralsMenuItem.pkg
+Use cCJRTFBulletsButtonMenuItem.pkg
+Use cCJRTFRightParenthesisMenuItem.pkg
+Use cCJRTFBulletStyleMenuItem.pkg
+Use cCJRTFEncloseParenthesisMenuItem.pkg
+Use cCJRTFPeriodMenuItem.pkg
+Use cCJRTFNumbersOnlyMenuItem.pkg
+Use cCJRTFNoDisplayMenuItem.pkg
+Use cCJRTFUndoToolBarButton.pkg
+Use cCJRTFRedoToolBarButton.pkg
+Use cCJRTFStrikeOutToolBarButton.pkg
+Use cCJRTFSubScriptToolBarButton.pkg
+Use cCJRTFSuperScriptToolBarButton.pkg
+Use cCJRTFOutdentToolBarButton.pkg
+Use cCJRTFIndentToolBarButton.pkg
+Use cCJRTFFindAndReplaceToolBarButton.pkg
+Use cCJRTFFindInTextToolBarButton.pkg
+Use cCJRTFColorButton.pkg
+Use cCJRTFFontSelectorToolBarButton.pkg
+
+Register_Procedure DoIndent
+Register_Procedure DoOutdent
+
+Class cCJRTFFunctionsToolbar is a cCJRTFToolbar
+End_Class

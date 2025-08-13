@@ -1,0 +1,42 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+//****************************************************************************
+// An object of this class shows a picture to indicate that the user can
+// change the current selection in a RTF editor to bold
+//****************************************************************************
+Class cCJRTFBoldToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Bold"
+        Set psDescription to "Change Current Text Selection to Bold (Ctrl+B)"
+        Set psImage to "FontBold.Ico"
+        Set psShortcut to "Ctrl+B"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to change the current text selection to bold
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bIsRichEdit bBold
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbBold of hoFocus to bBold
+            Set pbBold of hoFocus to (not (bBold))
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit bBold
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbBold of hoFocus to bBold
+        End
+
+        Function_Return bBold
+    End_Function
+End_Class

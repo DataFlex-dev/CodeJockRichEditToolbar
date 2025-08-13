@@ -1,0 +1,142 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFFontSelectorToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Select Font"
+        Set psDescription to "Select Font for Text"
+        Set psImage to "FontSelector.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to open the font dialog and select font and size
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFontDialog hoFocus
+        Integer iLastErrorCode iFontSize iFontWeight rgbTextColor ePitchAndFamily
+        Integer iFontType iFontFamily iFontPitch
+        Boolean bFontSelected bFontItalics bFontUnderline bFontStrikeOut bFontBold bIsRichEdit
+        String sTypeFace
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get Create (RefClass (FontDialog)) to hoFontDialog
+
+            Get psTypeFace of hoFocus to sTypeFace
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move "MS Sans Serif" to sTypeFace
+            End
+
+            Get piFontSize of hoFocus to iFontSize
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move 180 to iFontSize
+            End
+
+            // This line usually gets a weird high number back. 4100 and higher. If
+            // the value is lower than 0 or higher than 1000 (the max) it is
+            // corrected in Font_Dlg.Pkg to FW_REGULAR (best guess)
+            Get piFontWeight of hoFocus to iFontWeight
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move FW_REGULAR to iFontWeight
+            End
+
+            Get pbItalics of hoFocus to bFontItalics
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move False to bFontItalics
+            End
+
+            Get pbUnderline of hoFocus to bFontUnderline
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move False to bFontUnderline
+            End
+
+            Get pbStrikeOut of hoFocus to bFontStrikeOut
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move False to bFontStrikeOut
+            End
+
+            Get TextColor of hoFocus to rgbTextColor
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move clBlack to rgbTextColor
+            End
+
+            Get pbBold of hoFocus to bFontBold
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move False to bFontBold
+            End
+
+            Get pePitchAndFamily of hoFocus to ePitchAndFamily
+            Get LastErrorCode of hoFocus to iLastErrorCode
+            If (iLastErrorCode = ERR_RE_ATTR_INCONSISTENT_THROUGH_SELECTION) Begin
+                Move (VARIABLE_PITCH ior FF_SWISS) to ePitchAndFamily
+            End
+
+            Get FontType of hoFontDialog to iFontType
+
+            // When the FontType contains SIMULATED_FONTTYPE the list only shows
+            // "REGULAR", so we remove the bit.
+            If (IsFlagIn (SIMULATED_FONTTYPE, iFontType)) Begin
+                Move (RemoveBitValue (SIMULATED_FONTTYPE, iFontType)) to iFontType
+            End
+
+            // Bold information is kept in the fonttype and in the fontweight so
+            // we need to synchronize that.
+            If (bFontBold) Begin
+                Move (iFontType ior BOLD_FONTTYPE) to iFontType
+                Move FW_BOLD to iFontWeight
+            End
+
+            Set FaceName of hoFontDialog to sTypeFace
+            Set FontPointSize of hoFontDialog to iFontSize
+            Set FontHeight of hoFontDialog to (iFontSize / 20.0)
+            Set FontWidth of hoFontDialog to 0 // -1 means use FontSize which is not desired
+            Set FontWeight of hoFontDialog to iFontWeight
+            Set FontItalic of hoFontDialog to bFontItalics
+            Set FontUnderline of hoFontDialog to bFontUnderline
+            Set FontStrikeOut of hoFontDialog to bFontStrikeOut
+            Set FontRGBColors of hoFontDialog to rgbTextColor
+            Set FontType of hoFontDialog to iFontType
+            Set FontPitch of hoFontDialog to (ePitchAndFamily iand |CI$3)
+            Set FontFamily of hoFontDialog to (ePitchAndFamily iand |CI$FC)
+
+            Set NoScriptSel_State of hoFontDialog to True
+
+            Get FontDialog of hoFontDialog to bFontSelected
+            If (bFontSelected) Begin
+                Get FaceName of hoFontDialog to sTypeFace
+                Get FontPointSize of hoFontDialog to iFontSize
+                Get FontWeight of hoFontDialog to iFontWeight
+                Get FontItalic of hoFontDialog to bFontItalics
+                Get FontUnderline of hoFontDialog to bFontUnderline
+                Get FontStrikeOut of hoFontDialog to bFontStrikeOut
+                Get FontRGBColors of hoFontDialog to rgbTextColor
+                Get FontType of hoFontDialog to iFontType
+                Get FontPitch of hoFontDialog to iFontPitch
+                Get FontFamily of hoFontDialog to iFontFamily
+
+                Set pbBold of hoFocus to (IsFlagIn (BOLD_FONTTYPE, iFontType))
+                Set psTypeFace of hoFocus to sTypeFace
+                Set piFontSize of hoFocus to (iFontSize * 2.0)
+                // The next line is needed to avoid that the fontweight value does weird things
+                Send Activate of hoFocus
+                Set piFontWeight of hoFocus to iFontWeight
+                Set pbItalics of hoFocus to bFontItalics
+                Set pbUnderline of hoFocus to bFontUnderline
+                Set pbStrikeOut of hoFocus to bFontStrikeOut
+                Set TextColor of hoFocus to rgbTextColor
+                Set pePitchAndFamily of hoFocus to (iFontFamily ior iFontPitch)
+            End
+
+            Send Destroy of hoFontDialog
+        End
+    End_Procedure
+End_Class

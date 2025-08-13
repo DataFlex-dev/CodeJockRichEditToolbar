@@ -1,0 +1,214 @@
+Object
+    Set psTitle To "RTF Functions"
+    Set pbDockNextTo To False
+
+    Object oBoldButton is a cCJRTFBoldToolBarButton
+    End_Object
+
+    Object oItalicsButton is a cCJRTFItalicsToolBarButton
+    End_Object
+
+    Object oUnderlineButton is a cCJRTFUnderlineToolBarButton
+    End_Object
+
+    Object oAlignLeftButton is a cCJRTFLeftAlignToolBarButton
+        Set pbControlBeginGroup to True
+    End_Object
+
+    Object oAlignCenterButton is a cCJRTFAlignCenterToolBarButton
+    End_Object
+
+    Object oAlignRightButton is a cCJRTAlignRightToolBarButton
+    End_Object
+
+    Object oNumberingButton is a cCJRTFNumberingMenuItem
+        Set pbControlBeginGroup To True
+
+        Object oNoBulletsMenuItem is a cCJRTFNoBulletsMenuItem
+        End_Object
+
+        Object oArabicNumbersMenuItem is a cCJRTFArabicNumbersMenuItem
+        End_Object
+
+        Object oLowercaseLettersMenuItem is a cCJRTFLowercaseLettersMenuItem
+        End_Object
+
+        Object oUppercaseLettersMenuItem is a cCJRTFUppercaseLettersMenuItem
+        End_Object
+
+        Object oLowerRomanNumeralsMenuItem is a cCJRTFRomanNumeralsMenuItem
+        End_Object
+
+        Object oUpperRomanNumeralsMenuItem is a cCJRTFUpperRomanNumeralsMenuItem
+        End_Object
+    End_Object
+
+    Object oBulletsButton is a cCJRTFBulletsButtonMenuItem
+        Set peControlType to xtpControlSplitButtonPopup
+
+        Object oRightParenthesisMenuItem is a cCJRTFRightParenthesisMenuItem
+        End_Object
+
+        Object oEncloseParenthesisMenuItem is a cCJRTFEncloseParenthesisMenuItem
+        End_Object
+
+        Object oPeriodMenuItem is a cCJRTFPeriodMenuItem
+        End_Object
+
+        Object oNumberOnlyMenuItem is a cCJRTFNumbersOnlyMenuItem
+        End_Object
+
+        Object oNoDisplayMenuItem is a cCJRTFNoDisplayMenuItem
+        End_Object
+    End_Object
+
+    Object oUndoButton is a cCJRTFUndoToolBarButton
+        Set pbControlBeginGroup To True
+    End_Object
+
+    Object oRedoButton is a cCJRTFRedoToolBarButton
+    End_Object
+
+    Object oStrikeOutButton is a cCJRTFStrikeOutToolBarButton
+        Set pbControlBeginGroup To True
+    End_Object
+
+    Object oSubScriptButton is a cCJRTFSubScriptToolBarButton
+    End_Object
+
+    Object oSuperScriptButton is a cCJRTFSuperScriptToolBarButton
+    End_Object
+
+    Object oOutdentButton is a cCJRTFOutdentToolBarButton
+        Set pbControlBeginGroup To True
+    End_Object
+
+    Object oIndentButton is a cCJRTFIndentToolBarButton
+    End_Object
+
+    Object oFindInTextButton is a cCJRTFFindInTextToolBarButton
+        Set pbControlBeginGroup To True
+    End_Object
+
+    Object oFindAndReplaceButton is a cCJRTFFindAndReplaceToolBarButton
+    End_Object
+
+    Object oColorButton is a cCJRTFColorButton
+        Set pbControlBeginGroup To True
+
+        Object oBlackMenuItem Is A cCJChangeColorMenuItem
+            Set psImage to "Black40x12.Ico"
+            Set psCaption To "Black"
+            Set psDescription To "Change the Color to Black"
+            Set peColor To clBlack
+        End_Object
+
+        Object oMaroonMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clMaroon
+            Set psImage to "Maroon40x12.Ico"
+            Set psCaption To "Maroon"
+            Set psDescription To "Change the Color to Maroon"
+        End_Object
+
+        Object oGreenMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clGreen
+            Set psImage to "Green40x12.Ico"
+            Set psCaption To "Green"
+            Set psDescription To "Change the Color to Green"
+        End_Object
+
+        Object oOliveMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clOlive
+            Set psImage to "Olive40x12.Ico"
+            Set psCaption to "Olive"
+            Set psDescription To "Change the Color to Olive"
+        End_Object
+
+        Object oNavyMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clNavy
+            Set psImage to "Navy40x12.Ico"
+            Set psCaption To "Navy"
+            Set psDescription To "Change the Color to Navy"
+        End_Object
+
+        Object oPurpleMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clPurple
+            Set psImage to "Purple40x12.Ico"
+            Set psCaption To "Purple"
+            Set psDescription To "Change the Color to Purple"
+        End_Object
+
+        Object oTealMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clTeal
+            Set psImage to "Teal40x12.Ico"
+            Set psCaption To "Teal"
+            Set psDescription To "Change the Color to Teal"
+        End_Object
+
+        Object oGrayMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clGray
+            Set psImage to "Gray40x12.Ico"
+            Set psCaption To "Gray"
+            Set psDescription To "Change the Color to Gray"
+        End_Object
+
+        Object oSilverMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clSilver
+            Set psImage to "Silver40x12.Ico"
+            Set psCaption To "Silver"
+            Set psDescription To "Change the Color to Silver"
+        End_Object
+
+        Object oRedMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clRed
+            Set psImage to "Red40x12.Ico"
+            Set psCaption To "Red"
+            Set psDescription To "Change the Color to Red"
+        End_Object
+
+        Object oLimeMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clLime
+            Set psImage to "Lime40x12.Ico"
+            Set psCaption To "Lime"
+            Set psDescription To "Change the Color to Lime"
+        End_Object
+
+        Object oYellowMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clYellow
+            Set psImage to "Yellow40x12.Ico"
+            Set psCaption To "Yellow"
+            Set psDescription To "Change the Color to Yellow"
+        End_Object
+
+        Object oBlueMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clBlue
+            Set psImage to "Blue40x12.Ico"
+            Set psCaption To "Blue"
+            Set psDescription To "Change the Color to Blue"
+        End_Object
+
+        Object oFuchsiaMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clFuchsia
+            Set psImage to "Fuchsia40x12.Ico"
+            Set psCaption To "Fuchsia"
+            Set psDescription To "Change the Color to Fuchsia"
+        End_Object
+
+        Object oAquaMenuItem Is A cCJChangeColorMenuItem
+            Set peColor To clAqua
+            Set psImage to "Aqua40x12.Ico"
+            Set psCaption To "Aqua"
+            Set psDescription To "Change the Color to Aqua"
+        End_Object
+
+        Object oWhiteMenuItem is a cCJChangeColorMenuItem
+            Set peColor To clWhite
+            Set psImage to "White40x12.Ico"
+            Set psCaption To "White"
+            Set psDescription To "Change the Color to White"
+        End_Object
+    End_Object
+
+    Object oFontSelectorButton is a cCJRTFFontSelectorToolBarButton
+    End_Object
+End_Object

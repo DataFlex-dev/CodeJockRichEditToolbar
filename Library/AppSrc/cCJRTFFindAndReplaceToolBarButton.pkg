@@ -1,0 +1,24 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFFindAndReplaceToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Find and Replace Text"
+        Set psDescription to "Find and Replace Text in Control (Ctrl+H)"
+        Set psImage to "ActionReplace.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to open the find and replace dialog
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Send DoFindReplace of hoFocus
+        End
+    End_Procedure
+End_Class

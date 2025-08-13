@@ -1,0 +1,254 @@
+﻿Use cDbRichEdit.pkg
+Use ShellExecute.Pkg
+Use ShellExecuteErrors.Pkg
+
+Class cdbRichEditor is a cdbRichEdit
+    //****************************************************************************
+    //  Create the object and set default property values
+    //****************************************************************************
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        { DesignTime = False }
+        Property String psLastSearchText
+        { DesignTime = False }
+        Property Integer peLastSearchOptions
+        { DesignTime = False }
+        Property Boolean pbIsRichEdit True
+
+        Property Handle phoSearch
+        Property Handle phoSearchAndReplace
+
+        Set Label_Justification_Mode to jMode_Right
+        Set Label_Col_Offset to 2
+
+        On_Key Key_Ctrl+Key_F Send DoFind
+        On_Key Key_Ctrl+Key_H Send DoFindReplace
+        On_Key Key_F3 Send DoRepeatFind
+        On_Key Key_Escape Send None
+        On_Key kCancel Send None
+        On_Key kExit_Function Send None
+    End_Procedure
+
+    //****************************************************************************
+    //  This method will change the pbWrap property value of the object but to
+    //  make it effective the object needs to be repaged.
+    //****************************************************************************
+    Procedure ChangeWrapState Boolean bWrapText
+        Set pbWrap To bWrapText
+        Send Page_Object False
+        Send Page_Object True
+    End_Procedure
+
+    //****************************************************************************
+    //  If the user clicks a hyperlink this event fires and we simply let the
+    //  shell deside if it can handle the link.
+    //****************************************************************************
+    Procedure OnLinkClicked integer iPositionStart integer iPositionEnd
+        String sLinkText sErrorText
+        Integer iRetval
+        Handle hWnd
+
+        Get TextRange iPositionStart iPositionEnd To sLinkText
+
+        If (sLinkText <> "") Begin
+            Get Window_Handle To hWnd
+            Move (ShellExecute (hWnd, "open", sLinkText, "", "", SW_SHOWDEFAULT)) To iRetval
+            If (iRetval <= 32) Begin
+                Move C_SE_BASE_ERROR_TEXT to sErrorText
+                Case Begin
+                    Case (iRetval = ERROR_FILE_NOT_FOUND)
+                        Move (sErrorText + C_ERROR_FILE_NOT_FOUND) to sErrorText
+                        Case Break
+                    Case (iRetval = ERROR_PATH_NOT_FOUND)
+                        Move (sErrorText + C_ERROR_PATH_NOT_FOUND) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_ACCESSDENIED)
+                        Move (sErrorText + C_SE_ERR_ACCESSDENIED) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_OOM)
+                        Move (sErrorText + C_SE_ERR_OOM) to sErrorText
+                        Case Break
+                    Case (iRetval = ERROR_BAD_FORMAT)
+                        Move (sErrorText + C_ERROR_BAD_FORMAT) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_SHARE)
+                        Move (sErrorText + C_SE_ERR_SHARE) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_ASSOCINCOMPLETE)
+                        Move (sErrorText + C_SE_ERR_ASSOCINCOMPLETE) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_DDETIMEOUT)
+                        Move (sErrorText + C_SE_ERR_DDETIMEOUT) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_DDEFAIL)
+                        Move (sErrorText + C_SE_ERR_DDEFAIL) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_DDEBUSY)
+                        Move (sErrorText + C_SE_ERR_DDEBUSY) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_NOASSOC)
+                        Move (sErrorText + C_SE_ERR_NOASSOC) to sErrorText
+                        Case Break
+                    Case (iRetval = SE_ERR_DLLNOTFOUND)
+                        Move (sErrorText + C_SE_ERR_DLLNOTFOUND) to sErrorText
+                        Case Break
+                    Case Else
+                        Move (C_SE_NO_ERRORTEXT * String (iRetval)) to sErrorText
+                        Case Break
+                Case End
+                Error DFERR_OPERATOR ("\n\n" - sErrorText)
+            End
+        End
+    End_Procedure
+
+    //****************************************************************************
+    //  This method will here to make one unique method for all dbexplorer
+    //  dataentry controls, some do not support read_only_state but fake it
+    //  by setting noput on the item
+    //****************************************************************************
+    Function IsReadOnly Returns Boolean
+        Boolean bIsReadOnly
+
+        Get Read_Only_State To bIsReadOnly
+
+        Function_Return bIsReadOnly
+    End_Function
+
+    //****************************************************************************
+    //  This function returns true to make the record pulldown and the button
+    //  bar to work.
+    //****************************************************************************
+    Function Deo_Object Returns Integer
+        Function_Return True
+    End_Function
+
+    //****************************************************************************
+    //  Indents selected paragraph(s) by 0.5 inches
+    //****************************************************************************
+    Procedure DoIndent
+        Integer iTwipsPerInch iParagraphIndent
+
+        // number of twips per inch
+        Move 1440 to iTwipsPerInch
+
+        // indent 0.5 inches from current indentation
+        Get piParagraphIndent to iParagraphIndent
+        Move (iParagraphIndent + (iTwipsPerInch * 0.5)) to iParagraphIndent
+        Set piParagraphIndent to iParagraphIndent
+    End_Procedure
+
+    //****************************************************************************
+    //  Outdents selected paragraph(s) by 0.5 inches
+    //****************************************************************************
+    Procedure DoOutdent
+        Integer iTwipsPerInch iParagraphIndent
+
+        // number of twips per inch
+        Move 1440 to iTwipsPerInch
+
+        // indent 0.5 inches from current indentation
+        Get piParagraphIndent to iParagraphIndent
+        Move (iParagraphIndent - (iTwipsPerInch * 0.5)) to iParagraphIndent
+        Set piParagraphIndent to iParagraphIndent
+    End_Procedure
+
+    //****************************************************************************
+    //  Calls find dialog in oRichEditFind.dg to let the user enter a search
+    //  string. Called by Ctrl+F or from the toolbar
+    //****************************************************************************
+    Procedure DoFind
+        Handle hoSearch
+
+        Get phoSearch to hoSearch
+        If (hoSearch > 0) Begin
+            Send DoSearch of hoSearch Self
+        End
+        Else Begin
+            Error DFERR_PROGRAM "Search Dialog property has no value"
+        End
+    End_Procedure
+
+    //****************************************************************************
+    //  This method gets called from the Find text dialog (in oRichEditFind.Dg)
+    //  and searches for a text string with given options. If there is no text
+    //  passed the search is not performed. If the text cannot be found a popup
+    //  box appeares to inform the user about the failure. To make repeated search
+    //  possible the last searchtext and options are stored in properties.
+    //****************************************************************************
+    Procedure DoSearch String sSearchText Integer eSearchOptions
+        Integer iStart iSelEnd
+
+        If (sSearchText = "") Begin
+            Procedure_Return
+        End
+
+        Get FindText sSearchText eSearchOptions To iStart
+
+        // was search successful?
+        If (iStart <> -1) Begin
+            // get length of search text
+            Move (Length (sSearchText) + iStart) To iSelEnd
+            // select search text found
+            Send SetSel iStart iSelEnd
+
+            Set psLastSearchText To sSearchText
+            Set peLastSearchOptions To eSearchOptions
+        End
+        Else Begin
+            Send Info_Box ("Text '" + sSearchText + "' not found") "Information"
+
+            Set psLastSearchText To ""
+            Set peLastSearchOptions To 0
+        End
+    End_Procedure
+
+    //****************************************************************************
+    //  Gets called from F3 in this object. Will repeat the last search operation
+    //  (if any)
+    //****************************************************************************
+    Procedure DoRepeatFind
+        String sSearchText
+        Integer eSearchOptions
+
+        Get psLastSearchText To sSearchText
+        Get peLastSearchOptions To eSearchOptions
+
+        Send DoSearch sSearchText eSearchOptions
+    End_Procedure
+
+    //****************************************************************************
+    //  Calls find and replace dialog in oRichEditFindReplace.dg to let the user
+    //  enter a search and a replace string. Called by Ctrl+H or from the toolbar
+    //****************************************************************************
+    Procedure DoFindReplace
+        Handle hoSearchAndReplace
+
+        Get phoSearchAndReplace to hoSearchAndReplace
+        If (hoSearchAndReplace > 0) Begin
+            Send DoReplace of hoSearchAndReplace Self
+        End
+        Else Begin
+            Error DFERR_PROGRAM "Search and Replace Dialog property has no value"
+        End
+    End_Procedure
+
+    //****************************************************************************
+    //  This method gets called from find & replace dialog (in
+    //  oRichEditFindReplace.dg) with the entered find and replace text strings
+    //****************************************************************************
+    Procedure DoReplace String sSearchText String sReplaceText Boolean bAll
+        Integer iReplacementCount
+
+        // do not replace all
+        If (Not (bAll)) Begin
+            Send ReplaceSel sReplaceText
+        End
+        Else Begin
+            // do replace all
+            Get ReplaceAll sSearchText sReplaceText To iReplacementCount
+            // tell user how many replacements were made
+            Send Info_Box (String (iReplacementCount) + " replacements were made") "Information"
+        End
+    End_Procedure
+End_Class

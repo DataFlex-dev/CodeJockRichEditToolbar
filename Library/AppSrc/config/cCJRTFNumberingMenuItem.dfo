@@ -1,0 +1,21 @@
+Object
+    Set pbControlBeginGroup To True
+
+    Object oNoBulletsMenuItem is a cCJRTFNoBulletsMenuItem
+    End_Object
+
+    Object oArabicNumbersMenuItem is a cCJRTFArabicNumbersMenuItem
+    End_Object
+
+    Object oLowercaseLettersMenuItem is a cCJRTFLowercaseLettersMenuItem
+    End_Object
+
+    Object oUppercaseLettersMenuItem is a cCJRTFUppercaseLettersMenuItem
+    End_Object
+
+    Object oLowerRomanNumeralsMenuItem is a cCJRTFRomanNumeralsMenuItem
+    End_Object
+
+    Object oUpperRomanNumeralsMenuItem is a cCJRTFUpperRomanNumeralsMenuItem
+    End_Object
+End_Object

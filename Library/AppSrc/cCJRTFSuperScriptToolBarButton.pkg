@@ -1,0 +1,39 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFSuperScriptToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "SuperScript"
+        Set psDescription to "Set or Cancels the Superscript of the Text Selection"
+        Set psImage to "SuperScript.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // If the text is superscripted send a message to change the superscript to
+    // normal or from normal to superscripted
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bSuperScript bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbSuperScript of hoFocus to bSuperScript
+            Move (not (bSuperScript)) to bSuperScript
+            Set pbSuperScript of hoFocus to bSuperScript
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit bSuperScript
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbSuperScript of hoFocus to bSuperScript
+        End
+
+        Function_Return bSuperScript
+    End_Function
+End_Class

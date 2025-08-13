@@ -1,0 +1,39 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFRedoToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Redo Typing"
+        Set psDescription to "Redoes Typing Operation(s) (Ctrl+Y)"
+        Set psImage to "ActionRedo.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to redo the last undoes
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bCanRedo bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbCanRedo of hoFocus to bCanRedo
+            If (bCanRedo) Begin
+                Send Redo of hoFocus
+            End
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit bRedo
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbCanRedo of hoFocus to bRedo
+        End
+
+        Function_Return bRedo
+    End_Function
+End_Class

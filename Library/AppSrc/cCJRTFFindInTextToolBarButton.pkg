@@ -1,0 +1,24 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFFindInTextToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Find Text"
+        Set psDescription to "Find Text in Control (Ctrl+F)"
+        Set psImage to "FindInText.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to open the find dialog
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Send DoFind of hoFocus
+        End
+    End_Procedure
+End_Class

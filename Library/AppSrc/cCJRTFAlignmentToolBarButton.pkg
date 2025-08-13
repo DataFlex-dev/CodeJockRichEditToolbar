@@ -1,0 +1,39 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFAlignmentToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Property Integer peAlignmentMode
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to change the alignment of the current text selection to
+    // the alignment stored in peAlignmentMode
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bIsRichEdit
+        Integer eAlignmentMode
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get peAlignmentMode to eAlignmentMode
+            Set peAlignment of hoFocus to eAlignmentMode
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit
+        Integer eAlignmentMode eAlignment
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get peAlignment of hoFocus to eAlignment
+        End
+
+        Get peAlignmentMode to eAlignmentMode
+        Function_Return (eAlignment = eAlignmentMode)
+    End_Function
+End_Class

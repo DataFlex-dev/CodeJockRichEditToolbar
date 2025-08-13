@@ -1,0 +1,14 @@
+﻿Use cCJRTFBulletStyleMenuItem.pkg
+
+//****************************************************************************
+// Change the BulletStyle of the focus object to busEncloseParen
+//****************************************************************************
+Class cCJRTFEncloseParenthesisMenuItem is a cCJRTFBulletStyleMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Enclose Parenthesis"
+        Set psDescription to "The Paragraph Number is Enclosed in Parentheses"
+        Set peBulletStyle to busEncloseParen
+    End_Procedure
+End_Class

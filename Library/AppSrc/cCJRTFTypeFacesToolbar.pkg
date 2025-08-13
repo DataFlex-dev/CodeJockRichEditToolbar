@@ -1,0 +1,10 @@
+﻿Use cCJRTFToolbar.pkg
+Use cCJRTFTypeFacesMenuItem.pkg
+
+Class cCJRTFTypeFacesToolbar is a cCJRTFToolbar
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psTitle to "Typefaces"
+    End_Procedure
+End_Class

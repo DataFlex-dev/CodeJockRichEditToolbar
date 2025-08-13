@@ -1,0 +1,28 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFIndentToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Increase Indent"
+        Set psDescription to "Increases Indentation of Selected Text"
+        Set psImage to "Indent.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to indent the current selected text
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bIsRichEdit
+        Integer eDelegationMode
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get Delegation_Mode of hoFocus to eDelegationMode
+            Set Delegation_Mode of hoFocus to No_Delegate_Or_Error
+            Send DoIndent of hoFocus
+            Set Delegation_Mode of hoFocus to eDelegationMode
+        End
+    End_Procedure
+End_Class

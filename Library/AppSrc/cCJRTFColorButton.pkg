@@ -1,0 +1,40 @@
+﻿Use cCJRTFMenuItem.pkg
+Use Colr_dlg.pkg
+
+Class cCJRTFColorButton is a cCJRTFMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Color"
+        Set psDescription to "Change the Text Color"
+        Set psImage to "ColorPalette.Ico"
+        Set peControlType to xtpControlSplitButtonPopup
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to open the color selector dialog
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus hoColorSelector
+        Integer rgbTextColor
+        Boolean bColorSelected bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get TextColor of hoFocus to rgbTextColor
+
+            Get Create (RefClass (ColorDialog)) to hoColorSelector
+            If (hoColorSelector > 0) Begin
+                Set SelectedColor of hoColorSelector to rgbTextColor
+
+                Get Show_Dialog of hoColorSelector to bColorSelected
+                If (bColorSelected) Begin
+                    Get SelectedColor of hoColorSelector to rgbTextColor
+                    Set TextColor of hoFocus to rgbTextColor
+                End
+
+                Send Destroy of hoColorSelector
+            End
+        End
+    End_Procedure
+End_Class

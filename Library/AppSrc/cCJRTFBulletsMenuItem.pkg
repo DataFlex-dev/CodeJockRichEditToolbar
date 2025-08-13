@@ -1,0 +1,40 @@
+﻿Use cCJRTFMenuItem.pkg
+
+Class cCJRTFBulletsMenuItem is a cCJRTFMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psImageChecked to "Check.Ico"
+
+        Property Integer peBullets
+    End_Procedure
+
+    //****************************************************************************
+    // Change the Bullets of the focus object to the peBullets property
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bIsRichEdit
+        Integer eBullets
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get peBullets to eBullets
+            Set peBullets of hoFocus to eBullets
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Handle hoFocus
+        Boolean bIsRichEdit
+        Integer eBullets eFocusBullets
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get peBullets of hoFocus to eFocusBullets
+        End
+
+        Get peBullets to eBullets
+        Function_Return (eBullets = eFocusBullets)
+    End_Function
+End_Class

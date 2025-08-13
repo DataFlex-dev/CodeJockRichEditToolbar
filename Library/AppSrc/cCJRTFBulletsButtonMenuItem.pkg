@@ -1,0 +1,31 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFBulletsButtonMenuItem is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Bullets"
+        Set psDescription to "Use / Cancel the Use of bullets"
+        Set psImage to "Bullets.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // If no bullets turn bullets on. Else turn off
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Integer eBullets
+        Boolean bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get peBullets of hoFocus to eBullets
+            If (eBullets <> buBullets) Begin
+                Set peBullets of hoFocus to buBullets
+            End
+            Else Begin
+                Set peBullets of hoFocus to buNone
+            End
+        End
+    End_Procedure
+End_Class

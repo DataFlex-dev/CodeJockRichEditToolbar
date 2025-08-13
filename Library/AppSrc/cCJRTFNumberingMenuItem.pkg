@@ -1,0 +1,36 @@
+﻿Use cCJRTFMenuItem.pkg
+
+//****************************************************************************
+// An object of this class shows a picture to indicate that the user can
+// change the current selection in a RTF editor to use numbering
+//****************************************************************************
+Class cCJRTFNumberingMenuItem is a cCJRTFMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Numbering"
+        Set psDescription to "Use / Cancel the Use of Numbering"
+        Set psImage to "Numbering.Ico"
+        Set peControlType to xtpControlSplitButtonPopup
+    End_Procedure
+
+    //****************************************************************************
+    // If no bullets turn bullets on. Else turn off
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Integer eBullets
+        Boolean bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get peBullets of hoFocus to eBullets
+            If (eBullets = buNone or eBullets = buBullets) Begin
+                Set peBullets of hoFocus to buArabicNumbers
+            End
+            Else Begin
+                Set peBullets of hoFocus to buNone
+            End
+        End
+    End_Procedure
+End_Class

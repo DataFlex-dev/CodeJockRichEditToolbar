@@ -1,0 +1,14 @@
+﻿Use cCJRTFBulletStyleMenuItem.pkg
+
+//****************************************************************************
+// Change the BulletStyle of the focus object to busNumberOnly
+//****************************************************************************
+Class cCJRTFNumbersOnlyMenuItem is a cCJRTFBulletStyleMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Number Only"
+        Set psDescription to "The Paragraph Number is Displayed without Surrounding or Following Characters"
+        Set peBulletStyle to busNumberOnly
+    End_Procedure
+End_Class

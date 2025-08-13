@@ -1,0 +1,9 @@
+WarningEx General DFERR_COMP_WARNING_OBSOLETE_PACKAGE "oRTFTypeFaceBand.pkg is obsolete.  Create a toolbar by dragging the cCJRTFTypeFacesToolbar to the commandbar system." 
+
+Use cCJRTFTypeFacesToolbar.pkg
+Use cCJRTFTypeFacesMenuItem.pkg
+
+Object oRTFTypeFacesToolbar is a cCJRTFTypeFacesToolbar
+    Object oTypeFacesToolItem is a cCJRTFTypeFacesMenuItem
+    End_Object
+End_Object

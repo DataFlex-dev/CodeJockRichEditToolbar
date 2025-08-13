@@ -1,0 +1,14 @@
+﻿Use cCJRTFBulletStyleMenuItem.pkg
+
+//****************************************************************************
+// Change the BulletStyle of the focus object to busPeriod
+//****************************************************************************
+Class cCJRTFPeriodMenuItem is a cCJRTFBulletStyleMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Period"
+        Set psDescription to "The Paragraph Number is Followed by a Period (.)"
+        Set peBulletStyle to busPeriod
+    End_Procedure
+End_Class

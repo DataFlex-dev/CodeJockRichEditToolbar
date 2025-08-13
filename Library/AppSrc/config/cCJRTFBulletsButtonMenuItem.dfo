@@ -1,0 +1,18 @@
+Object
+    Set peControlType to xtpControlSplitButtonPopup
+
+    Object oRightParenthesisMenuItem is a cCJRTFRightParenthesisMenuItem
+    End_Object
+
+    Object oEncloseParenthesisMenuItem is a cCJRTFEncloseParenthesisMenuItem
+    End_Object
+
+    Object oPeriodMenuItem is a cCJRTFPeriodMenuItem
+    End_Object
+
+    Object oNumberOnlyMenuItem is a cCJRTFNumbersOnlyMenuItem
+    End_Object
+
+    Object oNoDisplayMenuItem is a cCJRTFNoDisplayMenuItem
+    End_Object
+End_Object

@@ -1,0 +1,17 @@
+﻿Use Windows.pkg
+
+Register_Function pbIsRichEdit Returns Boolean
+
+Function IsFocusRichEditControl Handle ByRef hoFocus Returns Boolean
+    Integer eDelegationMode
+    Boolean bIsRichEdit
+
+    Get Focus to hoFocus
+
+    Get Delegation_Mode of hoFocus to eDelegationMode
+    Set Delegation_Mode of hoFocus to No_Delegate_Or_Error
+    Get pbIsRichEdit of hoFocus to bIsRichEdit
+    Set Delegation_Mode of hoFocus to eDelegationMode
+
+    Function_Return bIsRichEdit
+End_Function

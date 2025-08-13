@@ -1,0 +1,33 @@
+﻿Use Windows.pkg
+Use tTypeface.pkg
+
+Class cTypeFaces is a DfBaseWindow
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Property tTypeFace[] pTypeFaces
+    End_Procedure
+
+    Procedure EnumTypeFaces
+        tTypeFace[] TypeFaces
+
+        Set pTypeFaces to TypeFaces
+        Send Enumerate_Fonts ''
+    End_Function
+
+    Function User_Fontname String sFacename Integer iHeight Returns Integer
+        tTypeFace[] TypeFaces
+        Integer iElements
+
+        Get pTypeFaces to TypeFaces
+
+        Move (SizeOfArray (TypeFaces)) to iElements
+
+        Move sFacename to TypeFaces[iElements].sFaceName
+        Move iHeight to TypeFaces[iElements].iHeight
+
+        Set pTypeFaces to TypeFaces
+
+        Function_Return 0
+    End_Function
+End_Class

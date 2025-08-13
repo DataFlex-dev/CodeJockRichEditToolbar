@@ -1,0 +1,40 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFBulletStyleMenuItem is a cCJRTFMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psImageChecked to "Check.Ico"
+
+        Property Integer peBulletStyle
+    End_Procedure
+
+    //****************************************************************************
+    // Change the Bullets of the focus object to the peBulletStyle property
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bIsRichEdit
+        Integer eBulletStyle
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get peBulletStyle to eBulletStyle
+            Set peBulletStyle of hoFocus to eBulletStyle
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Handle hoFocus
+        Boolean bIsRichEdit
+        Integer eBulletStyle eFocusBulletStyle
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get peBulletStyle of hoFocus to eFocusBulletStyle
+        End
+
+        Get peBulletStyle to eBulletStyle
+        Function_Return (eBulletStyle = eFocusBulletStyle)
+    End_Function
+End_Class

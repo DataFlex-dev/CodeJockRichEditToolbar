@@ -1,0 +1,28 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFOutdentToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Decrease Indent"
+        Set psDescription to "Decreases Indentation of Selected Text"
+        Set psImage to "Outdent.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to outdent the current selected text
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bIsRichEdit
+        Integer eDelegationMode
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get Delegation_Mode of hoFocus to eDelegationMode
+            Set Delegation_Mode of hoFocus to No_Delegate_Or_Error
+            Send DoOutdent of hoFocus
+            Set Delegation_Mode of hoFocus to eDelegationMode
+        End
+    End_Procedure
+End_Class

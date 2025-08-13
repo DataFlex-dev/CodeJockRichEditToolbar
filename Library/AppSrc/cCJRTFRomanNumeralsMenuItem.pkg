@@ -1,0 +1,11 @@
+﻿Use cCJRTFBulletsMenuItem.pkg
+
+Class cCJRTFRomanNumeralsMenuItem is a cCJRTFBulletsMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Lowercase Roman Numerals"
+        Set psDescription to "Apply Numbering With Lowercase Roman Numerals"
+        Set peBullets to buLowerRomans
+    End_Procedure
+End_Class

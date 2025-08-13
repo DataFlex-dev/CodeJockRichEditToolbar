@@ -1,0 +1,52 @@
+﻿Use cCJCommandBarSystem.pkg
+
+{ OverrideProperty = psImage InitialValue = "cRTFMenuItem.Ico" }
+Class cCJRTFMenuItem is a cCJMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Property Handle phoDestination
+        Property Handle phmMessage
+        Property Handle phoMenuItem
+
+        Set pbActiveUpdate to True
+    End_Procedure
+
+    Function IsEnabled Returns Boolean
+        Boolean bIsRichEdit
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) To bIsRichEdit
+
+        Function_Return bIsRichEdit
+    End_Function
+
+    // Keep the description (statushelp) and the tooltip in sync
+    Procedure Set psDescription String sValue
+        Forward Set psDescription To sValue
+
+        Set psToolTip To sValue
+    End_Procedure
+
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoDest hmMessage hoMenuItem
+        Integer iVal
+
+        Get phoDestination To hoDest
+        Get phmMessage To hmMessage
+
+        If (hmMessage <> 0) Begin
+            If (hoDest = 0) Begin
+                Get Focus Of Desktop To hoDest
+            End
+
+            Get phoMenuItem To hoMenuItem
+            If (hoMenuItem <> 0) Begin
+                Send hmMessage Of hoDest hoMenuItem
+            End
+            Else Begin
+                Send hmMessage Of hoDest
+            End
+        End
+    End_Procedure
+End_Class

@@ -1,0 +1,39 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFStrikeOutToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Strike Out"
+        Set psDescription to "Strike Out Text"
+        Set psImage to "FontStrike.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // If the text is striked out send a message to change the striked out text
+    // to normal or from normal to strike out
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bStrikeOut bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbStrikeOut of hoFocus to bStrikeOut
+            Move (not (bStrikeOut)) to bStrikeOut
+            Set pbStrikeOut of hoFocus to bStrikeOut
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit bStrikeOut
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbStrikeOut of hoFocus to bStrikeOut
+        End
+
+        Function_Return bStrikeOut
+    End_Function
+End_Class

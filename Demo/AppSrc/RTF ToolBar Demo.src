@@ -1,0 +1,528 @@
+﻿Use DFAllEnt.pkg
+Use cCJStandardCommandBarSystem.pkg
+Use cCJStandardMenuItemClasses.pkg
+Use cCJRTFFunctionsToolbar.pkg
+Use cCJRTFTypeFacesToolbar.pkg
+Use cCJCommandBarSystem.pkg
+
+Object oHtmlHelp is a cHtmlHelp
+End_Object
+
+Object oApplication is a cApplication
+    Set peHelpType to htHtmlHelp
+End_Object
+
+Use oEditContextMenu.pkg
+Use oDEOEditContextMenu.pkg
+
+Object oMain is a Panel
+    Set Label to "RTF ToolBar Demo"
+    Set Location to 4 3
+    Set Size to 300 450
+
+    Object oCommandBarSystem is a cCJCommandBarSystem
+        Set pbTimerUpdate to True
+
+        Procedure OnCreateCommandBars
+            Handle hoOptions
+            Get OptionsObject to hoOptions
+            Forward Send OnCreateCommandBars
+        End_Procedure
+
+        Object oMenuBar is a cCJMenuBar
+
+            Object oFileMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption   to "&File"
+                Set psDescription to "Find, Save, Delete, Clear information or quit this application."
+                Set psCategory to "Menus"
+
+                Object oClearMenuItem is a cCJClearMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+
+                Object oClearAllMenu is a cCJClearAllMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+
+                Object oPromptMenuItem is a cCJPromptMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+
+                Object oFindMenuItem is a cCJFindMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+
+                Object oFindNextMenu is a cCJFindNextMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+
+                Object oFindPreviousMenu is a cCJFindPreviousMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+
+                Object oFindFirstMenu is a cCJFindFirstMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+
+                Object oFindLastMenu is a cCJFindLastMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+
+                Object oSaveMenuItem is a cCJSaveMenuItem
+                    Set pbAddToDesignerMenu to True
+                    Set pbControlBeginGroup to True
+                End_Object
+
+                Object oDeleteMenuItem is a cCJDeleteMenuItem
+                    Set pbAddToDesignerMenu to True
+                End_Object
+
+                Object oExitMenu is a cCJExitMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+
+            End_Object
+
+            Object oViewMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&View"
+                Set psToolTip to "View"
+                Set psDescription to "Available Views"
+
+                Object oRichEditMenuItem is a cCJMenuItem
+                    Set psCaption to "Rich Editor"
+                    Set psTooltip to "Show Rich Editor"
+
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_oRichEditView of hoClient
+                    End_Procedure
+                End_Object
+
+                Object oRichEditorMenuItem is a cCJMenuItem
+                    Set psCaption to "Rich Editor with Toolbar"
+                    Set psTooltip to "Rich Editor with Toolbar"
+                
+                    Procedure OnExecute Variant vCommandBarControl
+                        Handle hoClient
+                        Get Client_Id to hoClient
+                        Send Activate_oRichEditViewWithToolbar of hoClient
+                    End_Procedure
+                End_Object
+            End_Object
+
+            Object oReportMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Report"
+                Set psToolTip to "Report"
+                Set psDescription to "Available Reports"
+            End_Object
+
+            Object oNavigateMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Navigate"
+                Set psTooltip to "Navigate"
+                Set psDescription to "Move to different areas of the application"
+
+                Object oNextAreaMenu is a cCJNextAreaMenu
+                End_Object
+
+                Object oPriorAreaMenu is a cCJPriorAreaMenu
+                End_Object
+
+                Object oNextViewMenu is a cCJNextViewMenu
+                End_Object
+
+                Object oPriorViewMenu is a cCJPriorViewMenu
+                End_Object
+
+                Object oPromptMenu is a cCJPromptMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+
+                Object oZoomMenu is a cCJZoomMenuItem
+                End_Object
+
+            End_Object
+
+            Object oWindowMenu is a cCJMDIWindowsMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Window"
+                Set psToolTip to "Window"
+                Set psDescription to "Display Current Views and set other display options."
+
+                // These are the static windows items. More will be created in onInitPopup
+                Object oDisplayOptionsMenu is a cCJMenuItem
+                    Set peControlType to xtpControlPopup
+                    Set psCaption to "&Display Options"
+                    Set psToolTip to "Display Options"
+                    Set psDescription to "Set display options"
+
+                    Object oStatusbarMenu is a cCJStatusbarMenuItem
+                    End_Object
+
+                    Object oAutoArrangeIconsMenu is a cCJAutoArrangeIconsMenuItem
+                    End_Object
+
+                    Object oRestoreMenusMenu is a cCJRestoreMenusMenuItem
+                        Set pbControlBeginGroup to True
+                    End_Object
+
+                End_Object
+
+                Object oCascadeMenu is a cCJCascadeMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+
+                Object oHorizTile is a cCJTileHorizontally
+                End_Object
+
+                Object oVertTile is a cCJTileVertically
+                End_Object
+
+                Object oMinimizeMenuItem is a cCJMinimizeWindowsMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+
+                Object oRestoreMenuItem is a cCJRestoreWindowsMenuItem
+                End_Object
+
+                Object oArrangeIconsMenuItem is a cCJAutoArrangeIconsMenuItem
+                    Set pbControlBeginGroup to True
+                End_Object
+
+            End_Object
+
+            Object oHelpMenu is a cCJMenuItem
+                Set peControlType to xtpControlPopup
+                Set psCaption to "&Help"
+                Set psDescription to "Access Information for learning and using this DataFlex application."
+                Set psToolTip to "Help"
+
+                Object oHelpMenuItem is a cCJHelpMenuItem
+                End_Object
+
+                Object oAboutMenuItem is a cCJAboutMenuItem
+                End_Object
+
+            End_Object
+
+        End_Object
+
+        Object oFindToolBar is a cCJToolbar
+            Set psTitle to "Finding Toolbar"
+
+            Object oFindFirstTool is a cCJFindFirstMenuItem
+            End_Object
+
+            Object oFindPreviousTool is a cCJFindPreviousMenuItem
+            End_Object
+
+            Object oFindMenuTool is a cCJFindMenuItem
+            End_Object
+
+            Object oFindNextTool is a cCJFindNextMenuItem
+            End_Object
+
+            Object oFindLastTool is a cCJFindLastMenuItem
+            End_Object
+
+            Object oPromptToolItem is a cCJPromptMenuItem
+                Set pbControlBeginGroup to True
+            End_Object
+
+        End_Object
+
+        Object oFileToolBar is a cCJToolbar
+            Set psTitle to "Data Entry Toolbar"
+
+            Object oClearToolItem is a cCJClearMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+
+            Object oClearAllToolItem2 is a cCJClearAllMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+
+            Object oSaveToolItem is a cCJSaveMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+                Set pbControlBeginGroup to True
+            End_Object
+
+            Object oDeleteToolItem is a cCJDeleteMenuItem
+                Set peControlStyle to xtpButtonIconAndCaption
+            End_Object
+
+        End_Object
+
+        Object oEditToolBar is a cCJToolbar
+            Set psTitle to "Edit Toolbar"
+
+            Object oCutToolbarItem is a cCJCutMenuItem
+            End_Object
+
+            Object oCopyToolbarItem is a cCJCopyMenuItem
+            End_Object
+
+            Object oPasteToolbarItem is a cCJPasteMenuItem
+            End_Object
+
+            Object oDeleteEditToolbarItem is a cCJDeleteEditMenuItem
+                Set pbControlBeginGroup to True
+            End_Object
+        End_Object
+
+        Object oRTFFunctionsToolbar is a cCJRTFToolbar
+            Set psTitle to "RTF Functions"
+            Set pbDockNextTo to False
+
+            Object oBoldButton is a cCJRTFBoldToolBarButton
+            End_Object
+
+            Object oItalicsButton is a cCJRTFItalicsToolBarButton
+            End_Object
+
+            Object oUnderlineButton is a cCJRTFUnderlineToolBarButton
+            End_Object
+
+            Object oAlignLeftButton is a cCJRTFLeftAlignToolBarButton
+                Set pbControlBeginGroup to True
+            End_Object
+
+            Object oAlignCenterButton is a cCJRTFAlignCenterToolBarButton
+            End_Object
+
+            Object oAlignRightButton is a cCJRTAlignRightToolBarButton
+            End_Object
+
+            Object oNumberingButton is a cCJRTFNumberingMenuItem
+                Set pbControlBeginGroup to True
+
+                Object oNoBulletsMenuItem is a cCJRTFNoBulletsMenuItem
+                End_Object
+
+                Object oArabicNumbersMenuItem is a cCJRTFArabicNumbersMenuItem
+                End_Object
+
+                Object oLowercaseLettersMenuItem is a cCJRTFLowercaseLettersMenuItem
+                End_Object
+
+                Object oUppercaseLettersMenuItem is a cCJRTFUppercaseLettersMenuItem
+                End_Object
+
+                Object oLowerRomanNumeralsMenuItem is a cCJRTFRomanNumeralsMenuItem
+                End_Object
+
+                Object oUpperRomanNumeralsMenuItem is a cCJRTFUpperRomanNumeralsMenuItem
+                End_Object
+            End_Object
+
+            Object oBulletsButton is a cCJRTFBulletsButtonMenuItem
+                Set peControlType to xtpControlSplitButtonPopup
+
+                Object oRightParenthesisMenuItem is a cCJRTFRightParenthesisMenuItem
+                End_Object
+
+                Object oEncloseParenthesisMenuItem is a cCJRTFEncloseParenthesisMenuItem
+                End_Object
+
+                Object oPeriodMenuItem is a cCJRTFPeriodMenuItem
+                End_Object
+
+                Object oNumberOnlyMenuItem is a cCJRTFNumbersOnlyMenuItem
+                End_Object
+
+                Object oNoDisplayMenuItem is a cCJRTFNoDisplayMenuItem
+                End_Object
+            End_Object
+
+            Object oUndoButton is a cCJRTFUndoToolBarButton
+                Set pbControlBeginGroup to True
+            End_Object
+
+            Object oRedoButton is a cCJRTFRedoToolBarButton
+            End_Object
+
+            Object oStrikeOutButton is a cCJRTFStrikeOutToolBarButton
+                Set pbControlBeginGroup to True
+            End_Object
+
+            Object oSubScriptButton is a cCJRTFSubScriptToolBarButton
+            End_Object
+
+            Object oSuperScriptButton is a cCJRTFSuperScriptToolBarButton
+            End_Object
+
+            Object oOutdentButton is a cCJRTFOutdentToolBarButton
+                Set pbControlBeginGroup to True
+            End_Object
+
+            Object oIndentButton is a cCJRTFIndentToolBarButton
+            End_Object
+
+            Object oFindInTextButton is a cCJRTFFindInTextToolBarButton
+                Set pbControlBeginGroup to True
+            End_Object
+
+            Object oFindAndReplaceButton is a cCJRTFFindAndReplaceToolBarButton
+            End_Object
+
+            Object oColorButton is a cCJRTFColorButton
+                Set pbControlBeginGroup to True
+
+                Object oBlackMenuItem is a cCJChangeColorMenuItem
+                    Set psImage to "Black.Ico"
+                    Set psCaption to "Black"
+                    Set psDescription to "Change the Color to Black"
+                    Set peColor to clBlack
+                End_Object
+
+                Object oMaroonMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clMaroon
+                    Set psImage to "Maroon.Ico"
+                    Set psCaption to "Maroon"
+                    Set psDescription to "Change the Color to Maroon"
+                End_Object
+
+                Object oGreenMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clGreen
+                    Set psImage to "Green.Ico"
+                    Set psCaption to "Green"
+                    Set psDescription to "Change the Color to Green"
+                End_Object
+
+                Object oOliveMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clOlive
+                    Set psImage to "Olive.Ico"
+                    Set psCaption to "Olive"
+                    Set psDescription to "Change the Color to Olive"
+                End_Object
+
+                Object oNavyMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clNavy
+                    Set psImage to "Navy.Ico"
+                    Set psCaption to "Navy"
+                    Set psDescription to "Change the Color to Navy"
+                End_Object
+
+                Object oPurpleMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clPurple
+                    Set psImage to "Purple.Ico"
+                    Set psCaption to "Purple"
+                    Set psDescription to "Change the Color to Purple"
+                End_Object
+
+                Object oTealMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clTeal
+                    Set psImage to "Teal.Ico"
+                    Set psCaption to "Teal"
+                    Set psDescription to "Change the Color to Teal"
+                End_Object
+
+                Object oGrayMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clGray
+                    Set psImage to "Gray.Ico"
+                    Set psCaption to "Gray"
+                    Set psDescription to "Change the Color to Gray"
+                End_Object
+
+                Object oSilverMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clSilver
+                    Set psImage to "Silver.Ico"
+                    Set psCaption to "Silver"
+                    Set psDescription to "Change the Color to Silver"
+                End_Object
+
+                Object oRedMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clRed
+                    Set psImage to "Red.Ico"
+                    Set psCaption to "Red"
+                    Set psDescription to "Change the Color to Red"
+                End_Object
+
+                Object oLimeMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clLime
+                    Set psImage to "Lime.Ico"
+                    Set psCaption to "Lime"
+                    Set psDescription to "Change the Color to Lime"
+                End_Object
+
+                Object oYellowMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clYellow
+                    Set psImage to "Yellow.Ico"
+                    Set psCaption to "Yellow"
+                    Set psDescription to "Change the Color to Yellow"
+                End_Object
+
+                Object oBlueMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clBlue
+                    Set psImage to "Blue.Ico"
+                    Set psCaption to "Blue"
+                    Set psDescription to "Change the Color to Blue"
+                End_Object
+
+                Object oFuchsiaMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clFuchsia
+                    Set psImage to "Fuchsia.Ico"
+                    Set psCaption to "Fuchsia"
+                    Set psDescription to "Change the Color to Fuchsia"
+                End_Object
+
+                Object oAquaMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clAqua
+                    Set psImage to "Aqua.Ico"
+                    Set psCaption to "Aqua"
+                    Set psDescription to "Change the Color to Aqua"
+                End_Object
+
+                Object oWhiteMenuItem is a cCJChangeColorMenuItem
+                    Set peColor to clWhite
+                    Set psImage to "White.Ico"
+                    Set psCaption to "White"
+                    Set psDescription to "Change the Color to White"
+                End_Object
+            End_Object
+
+            Object oFontSelectorButton is a cCJRTFFontSelectorToolBarButton
+            End_Object
+        End_Object
+
+        Object oRTFTypeFacesToolbar is a cCJRTFTypeFacesToolbar
+            Object oTypeFacesToolItem is a cCJRTFTypeFacesMenuItem
+            End_Object
+        End_Object
+
+        Object oStatusBar is a cCJStatusBar
+
+            Object oStatusPane1 is a cCJStatusBarPane
+                Set piID to sbpIDIdlePane
+                Set pbStyleStretch to True
+            End_Object
+
+            Object oStatusPane2 is a cCJStatusBarPane
+                Set phoViewPane to Self
+                Set pbStyleStretch to True
+            End_Object
+
+        End_Object
+
+    End_Object
+
+    Object oClientArea is a ClientArea
+        Use StdAbout.pkg
+        Use RichEdit.vw
+        Use RichEditWithToolbar.vw
+
+        Procedure Activate_About
+            Send DoAbout "" "" "" "" ""
+        End_Procedure
+
+    End_Object
+
+End_Object
+
+Start_UI

@@ -1,0 +1,39 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+Class cCJRTFSubScriptToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "SubScript"
+        Set psDescription to "Set or Cancels the Subscript of the Text Selection"
+        Set psImage to "SubScript.Ico"
+    End_Procedure
+
+    //****************************************************************************
+    // If the text is subscripted send a message to change the subscript to
+    // normal or from normal to subscripted
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bSubScript bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbSubScript of hoFocus to bSubScript
+            Move (not (bSubScript)) to bSubScript
+            Set pbSubScript of hoFocus to bSubScript
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit bSubScript
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbSubScript of hoFocus to bSubScript
+        End
+
+        Function_Return bSubScript
+    End_Function
+End_Class

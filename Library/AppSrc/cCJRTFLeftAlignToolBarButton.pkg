@@ -1,0 +1,16 @@
+﻿Use cCJRTFAlignmentToolBarButton.pkg
+
+//****************************************************************************
+// An object of this class shows a picture to indicate that the user can
+// change the current selection in a RTF editor to left aligned
+//****************************************************************************
+Class cCJRTFLeftAlignToolBarButton is a cCJRTFAlignmentToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Align Left"
+        Set psDescription to "Change Alignment of Current Text Selection to Left Align"
+        Set psImage to "AlignLeft.Ico"
+        Set peAlignmentMode to alLeft
+    End_Procedure
+End_Class

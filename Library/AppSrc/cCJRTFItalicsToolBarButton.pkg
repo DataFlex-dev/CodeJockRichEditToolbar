@@ -1,0 +1,42 @@
+﻿Use cCJRTFToolBarButton.pkg
+
+//****************************************************************************
+// An object of this class shows a picture to indicate that the user can
+// change the current selection in a RTF editor to italics
+//****************************************************************************
+Class cCJRTFItalicsToolBarButton is a cCJRTFToolBarButton
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "Italics"
+        Set psDescription to "Change Current Text Selection to Italics (Ctrl+I)"
+        Set psImage to "FontItalic.Ico"
+        Set psShortcut to "Ctrl+I"
+    End_Procedure
+
+    //****************************************************************************
+    // Send a message to change the current text selection to italics
+    //****************************************************************************
+    Procedure OnExecute Variant vCommandBarControl
+        Handle hoFocus
+        Boolean bItalics bIsRichEdit
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbItalics of hoFocus to bItalics
+            Set pbItalics of hoFocus to (not (bItalics))
+        End
+    End_Procedure
+
+    Function IsChecked Returns Boolean
+        Boolean bIsRichEdit bItalics
+        Handle hoFocus
+
+        Get IsFocusRichEditControl (&hoFocus) to bIsRichEdit
+        If (bIsRichEdit) Begin
+            Get pbItalics of hoFocus to bItalics
+        End
+
+        Function_Return bItalics
+    End_Function
+End_Class

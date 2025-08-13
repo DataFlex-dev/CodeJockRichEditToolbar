@@ -1,0 +1,14 @@
+﻿Use cCJRTFBulletStyleMenuItem.pkg
+
+//****************************************************************************
+// Change the BulletStyle of the focus object to busNoDisplay
+//****************************************************************************
+Class cCJRTFNoDisplayMenuItem is a cCJRTFBulletStyleMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption To "No Display"
+        Set psDescription to "The paragraph Number is Applied, But not Displayed"
+        Set peBulletStyle to busNoDisplay
+    End_Procedure
+End_Class

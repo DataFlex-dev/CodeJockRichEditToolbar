@@ -1,0 +1,14 @@
+﻿Use cCJRTFBulletStyleMenuItem.pkg
+
+//****************************************************************************
+// Change the BulletStyle of the focus object to busRightParen
+//****************************************************************************
+Class cCJRTFRightParenthesisMenuItem is a cCJRTFBulletStyleMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Right Parenthesis"
+        Set psDescription to "The Paragraph Number is Followed by a Closing (Right) Parenthesis"
+        Set peBulletStyle to busRightParen
+    End_Procedure
+End_Class

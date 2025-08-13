@@ -1,0 +1,11 @@
+﻿Use cCJRTFBulletsMenuItem.pkg
+
+Class cCJRTFLowercaseLettersMenuItem is a cCJRTFBulletsMenuItem
+    Procedure Construct_Object
+        Forward Send Construct_Object
+
+        Set psCaption to "Lowercase Letters"
+        Set psDescription to "Apply Numbering With Lowercase Letters"
+        Set peBullets to buLowerLetters
+    End_Procedure
+End_Class
