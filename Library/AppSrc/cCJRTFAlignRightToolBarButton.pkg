@@ -4,7 +4,7 @@
 // An object of this class shows a picture to indicate that the user can
 // change the current selection in a RTF editor to right aligned
 //****************************************************************************
-Class cCJRTAlignRightToolBarButton is a cCJRTFAlignmentToolBarButton
+Class cCJRTFAlignRightToolBarButton is a cCJRTFAlignmentToolBarButton
     Procedure Construct_Object
         Forward Send Construct_Object
 

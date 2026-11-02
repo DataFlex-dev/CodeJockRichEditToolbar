@@ -26,7 +26,7 @@ Object oRTFFunctionsToolbar is a cCJRTFFunctionsToolbar
     Object oAlignCenterButton is a cCJRTFAlignCenterToolBarButton
     End_Object
 
-    Object oAlignRightButton is a cCJRTAlignRightToolBarButton
+    Object oAlignRightButton is a cCJRTFAlignRightToolBarButton
     End_Object
 
     Object oNumberingButton is a cCJRTFNumberingMenuItem

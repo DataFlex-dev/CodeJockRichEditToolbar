@@ -1,5 +1,7 @@
 ﻿Use cCJRTFToolBarButton.pkg
 
+Register_Procedure DoFindReplace
+
 Class cCJRTFFindAndReplaceToolBarButton is a cCJRTFToolBarButton
     Procedure Construct_Object
         Forward Send Construct_Object
