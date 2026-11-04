@@ -13,7 +13,7 @@ Class cTypeFaces is a DfBaseWindow
 
         Set pTypeFaces to TypeFaces
         Send Enumerate_Fonts ''
-    End_Function
+    End_Procedure
 
     Function User_Fontname String sFacename Integer iHeight Returns Integer
         tTypeFace[] TypeFaces

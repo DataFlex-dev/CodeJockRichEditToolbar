@@ -1,4 +1,50 @@
-[Properties]
-Version=25.0
-[WorkspacePaths]
-ConfigFile=.\Programs\Config.ws
+{
+    "description": "RTF Toolbar for CodeJock Commandbars",
+    "df": 26.0,
+    "package": {
+        "icon": "CJRTFToolbar.png",
+        "includeFiles": [
+            "Help"
+        ],
+        "install": [
+            "Bitmaps/ActionReplace.ico",
+            "Bitmaps/AlignCenter.ico",
+            "Bitmaps/AlignLeft.ico",
+            "Bitmaps/AlignRight.ico",
+            "Bitmaps/Aqua.ico",
+            "Bitmaps/Black.ico",
+            "Bitmaps/Blue.ico",
+            "Bitmaps/Bullets.Ico",
+            "Bitmaps/Check.Ico",
+            "Bitmaps/ColorPalette.Ico",
+            "Bitmaps/FindInText.ico",
+            "Bitmaps/FontBold.ico",
+            "Bitmaps/FontItalic.ico",
+            "Bitmaps/FontSelector.ico",
+            "Bitmaps/FontStrike.ico",
+            "Bitmaps/Fuchsia.ico",
+            "Bitmaps/Gray.ico",
+            "Bitmaps/Green.ico",
+            "Bitmaps/Indent.ico",
+            "Bitmaps/Lime.ico",
+            "Bitmaps/Maroon.ico",
+            "Bitmaps/Navy.ico",
+            "Bitmaps/Numbering.Ico",
+            "Bitmaps/Olive.ico",
+            "Bitmaps/Outdent.ico",
+            "Bitmaps/Purple.ico",
+            "Bitmaps/Red.ico",
+            "Bitmaps/Search.Ico",
+            "Bitmaps/Silver.ico",
+            "Bitmaps/SubScript.Ico",
+            "Bitmaps/SuperScript.Ico",
+            "Bitmaps/Teal.ico",
+            "Bitmaps/Underline.Ico",
+            "Bitmaps/White.ico",
+            "Bitmaps/Yellow.ico"
+        ],
+        "license": "BSD-3-Clause",
+        "licenseFile": "LICENSE",
+        "version": "1.0.2"
+    }
+}
